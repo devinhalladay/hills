@@ -24,6 +24,7 @@
   },
   "scripts": {
     "build": "babel ./src -d ./lib",
-    "test": "mocha --require @babel/register"
+    "test": "mocha --require @babel/register",
+    "prepublishOnly": "npm run build"
   }
 }
