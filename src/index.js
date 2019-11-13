@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function hill(channelUri, callback) {
+exports.getChannel = (channelUri, callback) => {
   return new Promise((resolve, reject) => {
     if (channelUri === null) {
       reject('You need to specify a channel URI.')

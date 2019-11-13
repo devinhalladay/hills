@@ -1,5 +1,5 @@
 {
-  "name": "hill",
+  "name": "hills",
   "version": "1.0.0",
   "description": "a little third-party design ecosystem for tools built on top of are.na",
   "main": "index.js",
@@ -15,5 +15,15 @@
   "homepage": "https://github.com/devinhalladay/hill#readme",
   "dependencies": {
     "axios": "^0.19.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/register": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "mocha": "^6.2.2"
+  },
+  "scripts": {
+    "build": "babel ./src -d ./lib",
+    "test": "mocha --require @babel/register"
   }
 }
