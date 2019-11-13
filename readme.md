@@ -28,7 +28,7 @@ the hill design ecosystem consists of two parts:
 ## docs
 ### `getChannel` — fetch a channel
 
-```
+```js
 import { getChannel } from 'hills'
 
 getChannel('proletarian-bourgeois')
