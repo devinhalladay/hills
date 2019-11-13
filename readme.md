@@ -5,6 +5,8 @@
 
 ---
 
+figma file for shared components: https://www.figma.com/file/R2WmAz2mvW9TV2hyJZztMA/hill-design-ecosystem?node-id=0%3A1
+
 ## intent & goals
 1. make building tools on top of are.na easy, accessible, and fun
 2. contribute back to the community by listening for and addressing its needs, but spoken and un-
