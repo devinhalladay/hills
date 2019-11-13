@@ -1,0 +1,16 @@
+{
+  "name": "hill",
+  "version": "1.0.0",
+  "description": "a little third-party design ecosystem for tools built on top of are.na",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devinhalladay/hill.git"
+  },
+  "author": "devin halladay <devin@devinhalladay.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devinhalladay/hill/issues"
+  },
+  "homepage": "https://github.com/devinhalladay/hill#readme"
+}
