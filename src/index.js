@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-exports.getChannel = (channelUri, shouldGetAllBlocks = true, callback) => {
+exports.getChannel = (channelUri, shouldGetAllBlocks = true) => {
   async function apiCall(channel, page) {
     let re = /[^/]+(?=\/$|$)/;
     let channelSlug = re.exec(channelUri)[0];
@@ -12,8 +12,7 @@ exports.getChannel = (channelUri, shouldGetAllBlocks = true, callback) => {
 
   return new Promise((resolve, reject) => {
     if (typeof channelUri !== 'string') {
-      reject('You need to specify a channel URI.')
-      return callback(null, channelUri)
+      reject('You need to specify a channel URI as a string.')
     } else {
       const initialPage = 1;
       let currentPage = initialPage;
@@ -38,10 +37,6 @@ exports.getChannel = (channelUri, shouldGetAllBlocks = true, callback) => {
             resolve(channelData);
           }
         });
-        
-      if (callback && typeof callback === "function") {
-        return callback(null, channelUri)
-      }
     }
   });
 }

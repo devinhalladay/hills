@@ -24,3 +24,19 @@ the hill design ecosystem consists of two parts:
 **hill ui:** this is the design system apps can consume to make themselves visually and functionally consistent with hills, making it, well, a hill.
 
 **block representations**: block representations are immutable representations of are.na blocks that are style-consistent with the actual are.na ui. that means they have symbolic border color, correct type sizing, metadata, images, etc.
+
+## docs
+### `getChannel` — fetch a channel
+
+```
+import { getChannel } from 'hills'
+
+getChannel('proletarian-bourgeois')
+  .then((response) => {
+    console.log(response)
+  })
+```
+
+#### arguments
+- `channelUri` (string: **required**) - either a fully-qualified are.na channel url `(`https://www.are.na/devin-halladay/proletarian-bourgeois`) or an are.na channel slug (`proletarian-bourgeois`)
+- `shouldGetAllBlocks` (bool) - `true` by default; loops through every page of your channel and adds all blocks to the original response object
