@@ -1,18 +1,47 @@
-"use strict";
+import axios from 'axios';
 
-exports.getChannel = (channelUri, callback) => {
+exports.getChannel = (channelUri, shouldGetAllBlocks = true, callback) => {
+  async function apiCall(channel, page) {
+    let re = /[^/]+(?=\/$|$)/;
+    let channelSlug = re.exec(channelUri)[0];
+
+    let res = await axios.get(`https://api.are.na/v2/channels/${channelSlug}?per=100&page=${page}`);
+    let data = await res.data;
+    return data;
+  }
+
   return new Promise((resolve, reject) => {
-    if (channelUri === null) {
+    if (typeof channelUri !== 'string') {
       reject('You need to specify a channel URI.')
-      return callback('You need to specify a channel URI')
-    } else if (typeof sentence === 'function') {
-      callback = channelUri
-
-      reject('Your channel URI should be a String. Using argument as a callback instead.')
-      return callback('Your channel URI should be a String. Using argument as a callback instead.')
-    } else {
-      resolve(channelUri)
       return callback(null, channelUri)
+    } else {
+      const initialPage = 1;
+      let currentPage = initialPage;
+      let pageCount;
+
+      apiCall(channelUri, initialPage)
+        .then(data => {
+          let channelData = data;
+          
+          pageCount = Math.ceil(data.length / data.per);
+
+          if (pageCount > 1 && shouldGetAllBlocks === true) {
+            for (let i = currentPage; i < pageCount; i++) {
+              currentPage++;
+              apiCall(channelUri, currentPage)
+                .then(data => {
+                  channelData.contents = [...channelData.contents, ...data.contents]
+                  resolve(channelData);
+                });
+            }
+          } else {
+            resolve(channelData);
+          }
+        });
+        
+      if (callback && typeof callback === "function") {
+        return callback(null, channelUri)
+      }
     }
   });
 }
