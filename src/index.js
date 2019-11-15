@@ -36,7 +36,10 @@ exports.getChannel = (channelUri, shouldGetAllBlocks = true) => {
           } else {
             resolve(channelData);
           }
-        });
+        }).catch(err => {
+          let errJson = err.json();
+          Promise.reject(errJson.then((err) => { return err.data }));
+        })
     }
   });
 }

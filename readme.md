@@ -33,10 +33,11 @@ import { getChannel } from 'hills'
 
 getChannel('proletarian-bourgeois')
   .then((response) => {
+    // success!
     console.log(response)
   })
 ```
 
 #### arguments
 - `channelUri` (string: **required**) - either a fully-qualified are.na channel url `(`https://www.are.na/devin-halladay/proletarian-bourgeois`) or an are.na channel slug (`proletarian-bourgeois`)
-- `shouldGetAllBlocks` (bool) - `true` by default; loops through every page of your channel and adds all blocks to the original response object
+- `shouldGetAllBlocks` (bool) - if `false`, only returns the first 100 blocks from the channel
