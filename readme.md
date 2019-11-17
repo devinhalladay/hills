@@ -31,13 +31,16 @@ the hill design ecosystem consists of two parts:
 ```js
 import { getChannel } from 'hills'
 
-getChannel('proletarian-bourgeois')
-  .then((response) => {
-    // success!
-    console.log(response)
-  })
+getChannel('proletarian-bourgeois', {
+  // options (optional, duh)
+  blocksPer: 20 // blocks to get per page. must be <= 100.
+  blocksLimit: 123 // only fetch this many blocks.
+}).then((response) => {
+  // success!
+ console.log(response)
+})
 ```
 
 #### arguments
 - `channelUri` (string: **required**) - either a fully-qualified are.na channel url `(`https://www.are.na/devin-halladay/proletarian-bourgeois`) or an are.na channel slug (`proletarian-bourgeois`)
-- `shouldGetAllBlocks` (bool) - if `false`, only returns the first 100 blocks from the channel
+- `options` (object literal) — define options for the api call, using options listed above.
