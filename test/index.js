@@ -8,22 +8,19 @@ const testChannelUri = 'https://www.are.na/devin-halladay/gd398-idf-the-affect-o
 const testChannelSlug = 'gd398-idf-the-affect-of-ideologies-on-designed-forms'
 const options = {
   blocksPer: 20,
+  blocksLimit: 60
 }
 
 describe('getChannel', () => {
-  it('should resolve', async () => {
-    const channel = await getChannel(testChannelUri, options)
-    console.log(channel);
-    // console.log(`Fetched ${options.blocksLimit || channel.length}/${channel.length} blocks`);
-    channel.slug.should.equal(testChannelSlug)
-    channel.contents.length.should.be.oneOf([options.blocksLimit, channel.length])
-
+  it('resolves', () => {
+    getChannel(testChannelUri, options).then((channel) => {
+      expect(channel.slug).to.equal(testChannelSlug);
+    })
   });
 
-  // specify('should fetch all blocks', (done) => {
-  //   return getChannel(testChannelUri).then(channel => {
-  //     expect(channel.contents.length).to.equal(channel.length)
-  //     done()
-  //   })
-  // })
+  specify('should fetch all blocks', () => {
+    return getChannel(testChannelUri).then(channel => {
+      expect(channel.contents.length).to.be.oneOf([options.blocksLimit, channel.length])
+    })
+  })
 });

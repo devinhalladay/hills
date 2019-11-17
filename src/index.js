@@ -21,47 +21,29 @@ exports.getChannel = async (channelUri, options) => {
     let currentPage = initialPage;
     let pageCount;
 
-    await apiCall(channelUri, blocksPer, initialPage)
-      .then(async (data) => {
-        let channelData = data;
+    let initialApiCall = await apiCall(channelUri, blocksPer, initialPage);
+    let channelData = initialApiCall;
+    let totalPages = Math.ceil(channelData.length / channelData.per);
+    let totalBlockCount = channelData.length;
+    pageCount = blocksLimit == null ? totalPages : Math.ceil(blocksLimit / channelData.per);
 
-        let totalPages = Math.ceil(data.length / data.per);
-        pageCount = blocksLimit == null ? totalPages : Math.ceil(blocksLimit / data.per);
+    if (pageCount > 1) {
+      for (let i = currentPage; i <= pageCount; i++) {
+        let newApiCall = await apiCall(channelUri, blocksPer, i);
+        let newApiData = newApiCall;
+        
+        channelData.contents = [...channelData.contents, ...newApiData.contents];
 
-        // pageCount = limitedPages <= totalPages ? limitedPages : totalPages;
-
-        console.log(`total blocks: ${data.length}`);
-        // console.log(`actual initial blocks: ${data.contents.length}`); 
-        // console.log(`totalPages: ${totalPages}`);
-        console.log(`pageCount: ${pageCount}`);
-
-        console.log(`blocks per page: ${data.per}`);
-
-        console.log(`blocksLimit: ${blocksLimit}`);
-
-
-        if (pageCount > 1) {
-          for (let i = currentPage; i <= pageCount; i++) {
-            await apiCall(channelUri, blocksPer, i)
-              .then((data) => {
-                channelData.contents = [...channelData.contents, ...data.contents];
-                if (blocksLimit !== null && i == pageCount) {
-                  console.log('1');
-                  channelData.contents = channelData.contents.slice(0, blocksLimit)
-                  return channelData;
-                } else if (i == pageCount) {
-                  console.log('2');
-                  console.log(i);
-                  return channelData;
-                }
-              })
-          }
-        } else {
-          console.log(3);
+        if (blocksLimit !== null && i == pageCount - 1) {
+          channelData.contents = channelData.contents.slice(0, blocksLimit)
+          return channelData;
+        } else if (i == pageCount - 1) {
+          channelData.contents = channelData.contents.slice(0, totalBlockCount)
           return channelData;
         }
-      }).catch(err => {
-        console.log(err);
-      })
+      }
+    } else {
+      return channelData;
+    }
   }
 }
