@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/devinhalladay/hills/blob/master/hill.svg" width="400" /></p>
+<p align="center"><img src="https://github.com/devinhalladay/hills/blob/master/hill.svg" width="420" /></p>
 
 <h1 align="center">a place to watch the sun rise</h1>
 <p align="center"><strong>hill</strong> is a third-party design ecosystem for tools built on top of are.na</p>
