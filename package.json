@@ -1,6 +1,6 @@
 {
   "name": "hills",
-  "version": "0.1.5-0",
+  "version": "0.1.5",
   "description": "a little third-party design ecosystem for tools built on top of are.na",
   "main": "index.js",
   "repository": {
