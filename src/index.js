@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-exports.getChannel = (channelUri, options) => {
+exports.getChannel = async (channelUri, options) => {
   var options = options || {};
   let blocksPer = options.blocksPer == null ? 100 : options.blocksPer;
   let blocksLimit = options.blocksLimit || null;
@@ -10,57 +10,58 @@ exports.getChannel = (channelUri, options) => {
     let channelSlug = re.exec(channelUri)[0];
 
     let res = await axios.get(`https://api.are.na/v2/channels/${channelSlug}?per=${blocksPer}&page=${page}`);
-    let data = await res.data;
+    let data = res.data;
     return data;
   }
 
-  return new Promise((resolve, reject) => {
-    if (typeof channelUri !== 'string') {
-      reject('You need to specify a channel URI as a string.')
-    } else {
-      const initialPage = 1;
-      let currentPage = initialPage;
-      let pageCount;
+  if (typeof channelUri !== 'string') {
+    reject('You need to specify a channel URI as a string.')
+  } else {
+    const initialPage = 1;
+    let currentPage = initialPage;
+    let pageCount;
 
-      apiCall(channelUri, blocksPer, initialPage)
-        .then(data => {
-          let channelData = data;
+    await apiCall(channelUri, blocksPer, initialPage)
+      .then(async (data) => {
+        let channelData = data;
 
-          let totalPages = Math.ceil(data.length / data.per);
-          pageCount = blocksLimit == null ? totalPages : Math.ceil(blocksLimit / data.per);
-          
-          // pageCount = limitedPages <= totalPages ? limitedPages : totalPages;
+        let totalPages = Math.ceil(data.length / data.per);
+        pageCount = blocksLimit == null ? totalPages : Math.ceil(blocksLimit / data.per);
 
-          console.log(`total blocks: ${data.length}`);          
-          console.log(`actual initial blocks: ${data.contents.length}`); 
-          console.log(`totalPages: ${totalPages}`);
-          console.log(`pageCount: ${pageCount}`);
-          
-          console.log(`blocks per page: ${data.per}`);
+        // pageCount = limitedPages <= totalPages ? limitedPages : totalPages;
 
-          if (pageCount > 1) {
-            for (let i = currentPage; i < pageCount; i++) {              
-              currentPage++
+        console.log(`total blocks: ${data.length}`);
+        // console.log(`actual initial blocks: ${data.contents.length}`); 
+        // console.log(`totalPages: ${totalPages}`);
+        console.log(`pageCount: ${pageCount}`);
 
-              apiCall(channelUri, blocksPer, currentPage)
-                .then(data => {
-                  channelData.contents = [...channelData.contents, ...data.contents];
-                  resolve(channelData);
-                });
-            }
-          } else {
-            resolve(channelData);
+        console.log(`blocks per page: ${data.per}`);
+
+        console.log(`blocksLimit: ${blocksLimit}`);
+
+
+        if (pageCount > 1) {
+          for (let i = currentPage; i <= pageCount; i++) {
+            await apiCall(channelUri, blocksPer, i)
+              .then((data) => {
+                channelData.contents = [...channelData.contents, ...data.contents];
+                if (blocksLimit !== null && i == pageCount) {
+                  console.log('1');
+                  channelData.contents = channelData.contents.slice(0, blocksLimit)
+                  return channelData;
+                } else if (i == pageCount) {
+                  console.log('2');
+                  console.log(i);
+                  return channelData;
+                }
+              })
           }
-        }).catch(err => {
-          // let errJson = err.json();
-          // // Promise.reject(errJson.then((err) => { return err.data }));
-          // console.log(errJson);
-          console.log(err);
-          
-          
-        })
-    }
-  });
-
-
+        } else {
+          console.log(3);
+          return channelData;
+        }
+      }).catch(err => {
+        console.log(err);
+      })
+  }
 }
