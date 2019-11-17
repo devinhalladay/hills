@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 exports.getChannel = async (channelUri, options) => {
+  // TODO: Add error handlers in case a Promise does not resolve.
+
   var options = options || {};
   let blocksPer = options.blocksPer == null ? 100 : options.blocksPer;
   let blocksLimit = options.blocksLimit || null;
@@ -46,4 +48,8 @@ exports.getChannel = async (channelUri, options) => {
       return channelData;
     }
   }
+}
+
+exports.blockRepresentation = (block, options) => {
+  return block;
 }

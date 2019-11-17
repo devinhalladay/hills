@@ -5,14 +5,14 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devinhalladay/hill.git"
+    "url": "git+https://github.com/devinhalladay/hills.git"
   },
   "author": "devin halladay <devin@devinhalladay.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/devinhalladay/hill/issues"
+    "url": "https://github.com/devinhalladay/hills/issues"
   },
-  "homepage": "https://github.com/devinhalladay/hill#readme",
+  "homepage": "https://github.com/devinhalladay/hills#readme",
   "dependencies": {
     "axios": "^0.19.0",
     "chai": "^4.2.0"
