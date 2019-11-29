@@ -35,13 +35,10 @@ describe('blockRepresentation', () => {
   it('works', () => {
     getChannel(testChannelUri, blockRepresentationOptions).then((channel) => {
       const chosenBlock = channel.contents[Math.floor(Math.random() * Math.floor(channel.contents.length))]
-      console.log(Math.floor(Math.random() * Math.floor(channel.contents.length)));
-      
-      console.log(chosenBlock);
       
       const representation = blockRepresentation(chosenBlock);
+
       console.log(representation);
-      
     })
   })
 })

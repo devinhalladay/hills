@@ -51,5 +51,66 @@ exports.getChannel = async (channelUri, options) => {
 }
 
 exports.blockRepresentation = (block, options) => {
-  return block;
+  let mutatedBlock = block;
+  let representationHtml;
+
+  if (block.class === 'Image' && block.image) {
+    representationHtml = `
+      <div className="block block--image">
+        <img src=${block.image.original.url} />
+      </div>
+    `
+  } else if (block.class === 'Text') {
+    representationHtml = `
+      <div className="block block--text">
+        ${block.content}
+      </div>
+    `
+  } else if (block.class === 'Link' && block.source) {
+    representationHtml = `
+      <div className="block block--link">
+        <a href=${block.source.url} target="_blank" rel="noopener noreferrer">
+          <div className="block--link__thumbnail">
+            <img src=${block.image.display.url} />
+            <p>${block.generated_title}</p>
+          </div>
+        </a>
+      </div>
+    `
+  } else if (block.class === 'Attachment' && block.attachment) {
+    representationHtml = `
+      <div className="block block--attachment">
+        <a href=${block.attachment.url} target="_blank" rel="noopener noreferrer">
+          <div className="block--attachment__thumnbail">
+            <img src=${block.image ? block.image.display.url : ''} />
+            <p>${block.generated_title}</p>
+          </div>
+        </a>
+      </div>
+    `
+  } else if (block.class === 'Media' && block.embed) {
+    representationHtml = `
+      <div className="block block--media">
+        ${block.content}
+      </div>
+    `
+  } else if (block.class === 'Channel') {
+    representationHtml = `
+      <div className=${`block block--channel ${block.open ? 'open' : ''}`}>
+        <a target="_blank" rel="noopener noreferrer" href=${`http://are.na/${block.user.slug}/${block.slug}`}>
+          <p>${block.title}</p>
+          <p>${block.user.full_name}</p>
+          <p>${block.length} Blocks</p>
+        </a>
+      </div>
+    `
+  }
+
+  // TODO: Decide whether original API response should be immutable (prob yes)
+  // block = {
+  //   ...block,
+  //   html_representation: representationHtml
+  // }
+
+  return { block, representationHtml }
 }
