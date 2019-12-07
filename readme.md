@@ -1,9 +1,10 @@
-<p align="center"><img src="https://raw.githubusercontent.com/devinhalladay/hills/master/hill.svg" width="420" /></p>
+<p align="center"><img src="hill.svg" width="420" /></p>
 
 <h1 align="center">a place to watch the sun rise</h1>
 <p align="center"><strong>hill</strong> is a third-party design ecosystem for tools built on top of are.na</p>
 
 ---
+# Very WIP, not ready for anything production. Please watch the repo and wait for a more stable release :) ~2 weeks or so
 
 figma file for shared components: [hill design ecosystem](https://www.figma.com/file/R2WmAz2mvW9TV2hyJZztMA/hill-design-ecosystem?node-id=0%3A1)
 
