@@ -56,21 +56,21 @@ exports.blockRepresentation = (block, options) => {
 
   if (block.class === 'Image' && block.image) {
     representationHtml = `
-      <div className="block block--image">
+      <div className="Block block--image">
         <img src=${block.image.original.url} />
       </div>
     `
   } else if (block.class === 'Text') {
     representationHtml = `
-      <div className="block block--text">
+      <div className="Block block--text">
         ${block.content}
       </div>
     `
   } else if (block.class === 'Link' && block.source) {
     representationHtml = `
-      <div className="block block--link">
+      <div className="Block block--link">
         <a href=${block.source.url} target="_blank" rel="noopener noreferrer">
-          <div className="block--link__thumbnail">
+          <div className="Block--link__thumbnail">
             <img src=${block.image.display.url} />
             <p>${block.generated_title}</p>
           </div>
@@ -79,9 +79,9 @@ exports.blockRepresentation = (block, options) => {
     `
   } else if (block.class === 'Attachment' && block.attachment) {
     representationHtml = `
-      <div className="block block--attachment">
+      <div className="Block block--attachment">
         <a href=${block.attachment.url} target="_blank" rel="noopener noreferrer">
-          <div className="block--attachment__thumnbail">
+          <div className="Block--attachment__thumnbail">
             <img src=${block.image ? block.image.display.url : ''} />
             <p>${block.generated_title}</p>
           </div>
@@ -90,7 +90,7 @@ exports.blockRepresentation = (block, options) => {
     `
   } else if (block.class === 'Media' && block.embed) {
     representationHtml = `
-      <div className="block block--media">
+      <div className="Block block--media">
         ${block.content}
       </div>
     `

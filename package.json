@@ -2,7 +2,7 @@
   "name": "hills",
   "version": "0.1.5",
   "description": "a little third-party design ecosystem for tools built on top of are.na",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devinhalladay/hills.git"
